@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 
     public bool isstuck;
 
+    public bool IsDestroied;
+
+
     private void Awake()
     {
 
