@@ -50,7 +50,7 @@ public class BallTrigger : MonoBehaviour
                     {
                         ParentofGameObject.DestroyonCollision();
                         GameManager.Instance.DestroyOccurance = true;
-                        Debug.Log(GameManager.Instance.DestroyOccurance);
+                        //Debug.Log(GameManager.Instance.DestroyOccurance);
                     }
                     else
                     {
@@ -77,7 +77,7 @@ public class BallTrigger : MonoBehaviour
                 Debug.Log("triggered");
                 ParentofGameObject.DestroyonCollision();
                 GameManager.Instance.DestroyOccurance = true;
-                Debug.Log(GameManager.Instance.DestroyOccurance);
+               // Debug.Log(GameManager.Instance.DestroyOccurance);
             }
 
 
