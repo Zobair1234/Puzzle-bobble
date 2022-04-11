@@ -228,3 +228,4 @@ MonoBehaviour:
   ColorOfBall: 5
   AdjSameColor: 0
   RegisterOperationdone: 0
+  hasVisited: 0

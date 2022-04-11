@@ -34,9 +34,9 @@ public class CanonController : MonoBehaviour
             transform.Rotate(_rotation * Time.deltaTime * rotationspeed);
         
 
-        if (transform.eulerAngles.z >= 190)
+        if (transform.eulerAngles.z >= 170)
         {
-            transform.eulerAngles = new Vector3(0,0,189);
+            transform.eulerAngles = new Vector3(0,0,169);
         }
         else if (transform.eulerAngles.z <= 14)
         {

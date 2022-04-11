@@ -8,6 +8,7 @@ TagManager:
   - StickWall
   - InvalidParent
   - ValidParent
+  - BounceWall
   layers:
   - Default
   - TransparentFX

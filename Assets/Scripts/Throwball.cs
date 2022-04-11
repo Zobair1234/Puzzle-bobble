@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class Throwball : MonoBehaviour
@@ -14,10 +16,12 @@ public class Throwball : MonoBehaviour
 
     GameObject newGrandChild;
 
+    bool canClick;
    
 
     private void Start()
     {
+        canClick = true;
 
         child = gameObject.transform.GetChild(0);
 
@@ -35,9 +39,9 @@ public class Throwball : MonoBehaviour
         {
             grandChild.GetComponent<Ballbounce>().DoesPreExist = false;
 
-            if (transform!=null && Input.GetMouseButtonDown(0) && transform.GetChild(0).childCount > 0)
+            if (transform!=null && Input.GetMouseButtonDown(0) && transform.GetChild(0).childCount > 0 && canClick)
             {
-
+                 
 
                 grandChild.GetComponent<Rigidbody2D>().AddForce(transform.right * forceamount);
 
@@ -45,7 +49,12 @@ public class Throwball : MonoBehaviour
 
                 grandChild.transform.parent = AfterLaunchParent;
 
-               
+                canClick = false;
+
+                StartCoroutine(Wait());
+
+                /*canClick = true;*/
+
 
 
             }
@@ -55,7 +64,12 @@ public class Throwball : MonoBehaviour
 
         if (GameManager.Instance.IsDestroied )
         {
-            newGrandChild = Instantiate(ball, child.transform.position, ball.transform.rotation);
+
+            
+
+          
+
+            newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(0), child.transform.position, ball.transform.rotation);
 
             newGrandChild.transform.parent = child;
 
@@ -69,7 +83,7 @@ public class Throwball : MonoBehaviour
 
         else if(grandChild.GetComponent<Ballbounce>().stickComplete)
         {
-            newGrandChild = Instantiate(ball, child.transform.position, ball.transform.rotation);
+            newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(0), child.transform.position, ball.transform.rotation);
 
             newGrandChild.transform.parent = child;
 
@@ -79,5 +93,17 @@ public class Throwball : MonoBehaviour
             grandChild = gameObject.transform.GetChild(0).GetChild(0);
 
         }
+
+        
     }
+
+    IEnumerator Wait()
+    {
+        
+        yield return new WaitForSeconds(.8f);
+        Debug.Log("ASD");
+        canClick = true;
+
+    }
+
 }

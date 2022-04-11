@@ -1,7 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +15,8 @@ public class GameManager : MonoBehaviour
     public bool DestroyOccurance;
 
     public GameObject BallHolder;
+
+    public List<GameObject> DifferentColorofBalls = new List<GameObject>();
 
 
     private void Awake()
@@ -36,24 +37,31 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(DestroyOccurance)
+        if (DestroyOccurance)
         {
             DestroyOccurance = false;
 
+           
+
             foreach (var co in Roots.ToList())
             {
-                if (co != null )
+                if (co != null)
                 {
 
+                    Debug.Log("ASD");
                     var bb = co.GetComponent<Ballbounce>().collidedObjects;
 
                     TraverseBalls(co);
 
-                    
+
                 }
             }
 
+         //   DestroyBalls();
+
             DestroyDisconnectedBalls();
+
+            
         }
     }
 
@@ -69,10 +77,10 @@ public class GameManager : MonoBehaviour
             {
 
                 TraverseBalls(co);
-              
-               
+
+
             }
-            
+
         }
 
     }
@@ -81,25 +89,51 @@ public class GameManager : MonoBehaviour
     {
         Transform Bhtr = BallHolder.transform;
 
-       
-        if (BallHolder!=null && Bhtr.childCount>0)
+
+        if (BallHolder != null && Bhtr.childCount > 0)
         {
-            for(int i=0;i< Bhtr.childCount;i++)
+            for (int i = 0; i < Bhtr.childCount; i++)
             {
                 var ChildScript = Bhtr.GetChild(i).GetComponent<Ballbounce>();
-               
+
                 if (!ChildScript.hasVisited)
                 {
-                   
+
                     Destroy(Bhtr.GetChild(i).gameObject);
                 }
 
                 else
                 {
-                    Debug.Log("Working");
+
                     ChildScript.hasVisited = false;
                 }
             }
         }
     }
+
+
+   public  void DestroyBalls()
+    {
+        Transform Bhtr = BallHolder.transform;
+
+
+        if (BallHolder != null && Bhtr.childCount > 0)
+        {
+            for (int i = 0; i < Bhtr.childCount; i++)
+            {
+                var ChildScript = Bhtr.GetChild(i).GetComponent<Ballbounce>();
+
+                if (ChildScript.AdjSameColor >2)
+                {
+
+                    ChildScript.DestroyonCollision();
+                    Debug.Log("working");
+                }
+
+                
+            }
+        }
+    }
+
+
 }

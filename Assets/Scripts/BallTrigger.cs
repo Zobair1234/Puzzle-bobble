@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class BallTrigger : MonoBehaviour
 {
@@ -10,10 +8,13 @@ public class BallTrigger : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject ValidParents = collision.transform.gameObject;
+        Debug.Log("triggered");
 
-        if (ValidParents.gameObject.CompareTag("ValidParent") )
+        GameObject ValidParents = collision.transform.gameObject;
+       
+        if (ValidParents.gameObject.CompareTag("ValidParent"))
         {
+            
             //gameObject.transform.parent.GetComponent<Ballbounce>().collidedObjects.Add(collision.transform.parent.gameObject);
 
             Ballbounce CollidedObjectwithParent = collision.gameObject.transform.parent.GetComponent<Ballbounce>();
@@ -22,7 +23,7 @@ public class BallTrigger : MonoBehaviour
 
             //var collidelist = gameObject.transform.parent.GetComponent<Ballbounce>().collidedObjects;
 
-            foreach (var co in  ParentofGameObject.collidedObjects.ToList())
+            foreach (var co in ParentofGameObject.collidedObjects.ToList())
             {
                 if (co != null && co == collision.transform.parent.gameObject)
                 {
@@ -30,17 +31,17 @@ public class BallTrigger : MonoBehaviour
                 }
             }
 
-            if(Included == false && CollidedObjectwithParent.DoesPreExist)
+            if (Included == false && CollidedObjectwithParent.DoesPreExist)
             {
-                
+
                 ParentofGameObject.collidedObjects.Add(collision.transform.parent.gameObject);
 
-                
+
 
                 var bb = CollidedObjectwithParent;
 
 
-               
+
                 if (bb.ColorOfBall == ParentofGameObject.ColorOfBall)
                 {
 
@@ -50,6 +51,10 @@ public class BallTrigger : MonoBehaviour
                     {
                         ParentofGameObject.DestroyonCollision();
                         GameManager.Instance.DestroyOccurance = true;
+
+                        
+
+                        
                         //Debug.Log(GameManager.Instance.DestroyOccurance);
                     }
                     else
@@ -62,7 +67,7 @@ public class BallTrigger : MonoBehaviour
 
                 ParentofGameObject.stickComplete = true;
 
-               
+
                 //gameObject.transform.parent.GetComponent<Ballbounce>().RegisterOperationdone = true;
             }
             else
@@ -71,23 +76,23 @@ public class BallTrigger : MonoBehaviour
             }
 
             ParentofGameObject.DoesPreExist = true;
+            
+                if (CollidedObjectwithParent.AdjSameColor > 2 )
+                {
+                    Debug.Log("triggered");
+                    ParentofGameObject.DestroyonCollision();
+                    GameManager.Instance.DestroyOccurance = true;
+                    // Debug.Log(GameManager.Instance.DestroyOccurance);
+                }
 
-            if (ParentofGameObject.DoesPreExist && CollidedObjectwithParent.AdjSameColor > 2)
-            {
-                Debug.Log("triggered");
-                ParentofGameObject.DestroyonCollision();
-                GameManager.Instance.DestroyOccurance = true;
-               // Debug.Log(GameManager.Instance.DestroyOccurance);
-            }
 
-
-
+            GameManager.Instance.DestroyBalls();
 
             //Debug.Log(gameObject.transform.parent.GetComponent<Ballbounce>().AdjSameColor);
         }
 
 
-        
+
     }
 }
 
