@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
                 {
 
                     Debug.Log("ASD");
-                    var bb = co.GetComponent<Ballbounce>().collidedObjects;
+                    //var bb = co.GetComponent<Ballbounce>().collidedObjects;
 
                     TraverseBalls(co);
 
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-         //   DestroyBalls();
+           // DestroyBalls();
 
             DestroyDisconnectedBalls();
 
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
 
 
             }
+           
 
         }
 

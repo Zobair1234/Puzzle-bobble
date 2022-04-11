@@ -69,7 +69,7 @@ public class Throwball : MonoBehaviour
 
           
 
-            newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(0), child.transform.position, ball.transform.rotation);
+            newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(Random.Range(0,6)), child.transform.position, ball.transform.rotation);
 
             newGrandChild.transform.parent = child;
 
@@ -83,7 +83,7 @@ public class Throwball : MonoBehaviour
 
         else if(grandChild.GetComponent<Ballbounce>().stickComplete)
         {
-            newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(0), child.transform.position, ball.transform.rotation);
+            newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(Random.Range(0, 6)), child.transform.position, ball.transform.rotation);
 
             newGrandChild.transform.parent = child;
 

@@ -107,60 +107,16 @@ public class Ballbounce : MonoBehaviour
         //call when collided with another ball
         if (collision.gameObject.CompareTag("Ball"))
         {
-            collision.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-
-            collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-
-            if (collision.gameObject.transform.childCount > 0)
-            { 
-                collision.gameObject.transform.GetChild(0).GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static; 
-            }
-
-            GameManager.Instance.isstuck = true;
-
-            //stickComplete = true;
-
-
-
-
-            //collidedObjects.Add(collision.gameObject);
-
-            /*  var bb = collision.gameObject.GetComponent<Ballbounce>();
-
-              if (bb.ColorOfBall == this.ColorOfBall)
-              {
-
-
-                  if(!DoesPreExist && bb.AdjSameColor>=2 )
-                  {
-                      DestroyonCollision();
-                  }
-                  else
-                  {
-                      AdjSameColor++;
-                  }
-
-
-              }
-  */
-            //            DoesPreExist = true;
-
-            //gameObject.transform.GetChild(0).gameObject.SetActive(true);
-
-            //collision.gameObject.GetComponent<Ballbounce>().enabled = false;
-
-
-
-
-
-
-            //Debug.Log("Collided");
+            
         }
         //collision with the celling
         if (collision.gameObject.CompareTag("StickWall"))
         {
+
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            gameObject.GetComponent<Rigidbody2D>().mass = 100f;
             //collision.gameObject.GetComponent<Ballbounce>().enabled = false;
-            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            //gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
             GameManager.Instance.isstuck = true;
 

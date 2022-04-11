@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 431733917977152773}
   - component: {fileID: 852533165872647797}
-  - component: {fileID: 2448988124988620309}
   - component: {fileID: 1885280391318994210}
   m_Layer: 0
   m_Name: triggerBox
@@ -50,27 +49,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!50 &2448988124988620309
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 586307680485777287}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &1885280391318994210
 MonoBehaviour:
   m_ObjectHideFlags: 0

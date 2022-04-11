@@ -8,6 +8,7 @@ public class BallTrigger : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         Debug.Log("triggered");
 
         GameObject ValidParents = collision.transform.gameObject;
@@ -21,6 +22,16 @@ public class BallTrigger : MonoBehaviour
 
             Ballbounce ParentofGameObject = gameObject.transform.parent.GetComponent<Ballbounce>();
 
+            ParentofGameObject.stickComplete = true;
+
+            GameManager.Instance.isstuck = true;
+
+               gameObject.transform.parent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+             
+
+
+
+
             //var collidelist = gameObject.transform.parent.GetComponent<Ballbounce>().collidedObjects;
 
             foreach (var co in ParentofGameObject.collidedObjects.ToList())
@@ -31,12 +42,14 @@ public class BallTrigger : MonoBehaviour
                 }
             }
 
+
+
+
+           
             if (Included == false && CollidedObjectwithParent.DoesPreExist)
             {
 
                 ParentofGameObject.collidedObjects.Add(collision.transform.parent.gameObject);
-
-
 
                 var bb = CollidedObjectwithParent;
 
@@ -86,7 +99,7 @@ public class BallTrigger : MonoBehaviour
                 }
 
 
-            GameManager.Instance.DestroyBalls();
+            //GameManager.Instance.DestroyBalls();
 
             //Debug.Log(gameObject.transform.parent.GetComponent<Ballbounce>().AdjSameColor);
         }
