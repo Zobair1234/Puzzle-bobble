@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1885280391318994210}
   m_Layer: 0
   m_Name: triggerBox
-  m_TagString: InvalidParent
+  m_TagString: ValidParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

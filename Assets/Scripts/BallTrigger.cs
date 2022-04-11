@@ -10,15 +10,19 @@ public class BallTrigger : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject InvalidParents = collision.transform.gameObject;
+        GameObject ValidParents = collision.transform.gameObject;
 
-        if (InvalidParents.gameObject.CompareTag("InvalidParent") )
+        if (ValidParents.gameObject.CompareTag("ValidParent") )
         {
             //gameObject.transform.parent.GetComponent<Ballbounce>().collidedObjects.Add(collision.transform.parent.gameObject);
 
-            var collidelist = gameObject.transform.parent.GetComponent<Ballbounce>().collidedObjects;
+            Ballbounce CollidedObjectwithParent = collision.gameObject.transform.parent.GetComponent<Ballbounce>();
 
-            foreach (var co in collidelist.ToList())
+            Ballbounce ParentofGameObject = gameObject.transform.parent.GetComponent<Ballbounce>();
+
+            //var collidelist = gameObject.transform.parent.GetComponent<Ballbounce>().collidedObjects;
+
+            foreach (var co in  ParentofGameObject.collidedObjects.ToList())
             {
                 if (co != null && co == collision.transform.parent.gameObject)
                 {
@@ -26,35 +30,37 @@ public class BallTrigger : MonoBehaviour
                 }
             }
 
-            if(Included == false && collision.gameObject.transform.parent.GetComponent<Ballbounce>().DoesPreExist)
+            if(Included == false && CollidedObjectwithParent.DoesPreExist)
             {
                 
-                gameObject.transform.parent.GetComponent<Ballbounce>().collidedObjects.Add(collision.transform.parent.gameObject);
+                ParentofGameObject.collidedObjects.Add(collision.transform.parent.gameObject);
 
                 
 
-                var bb = collision.transform.parent.gameObject.GetComponent<Ballbounce>();
+                var bb = CollidedObjectwithParent;
 
 
                
-                if (bb.ColorOfBall == gameObject.transform.parent.GetComponent<Ballbounce>().ColorOfBall)
+                if (bb.ColorOfBall == ParentofGameObject.ColorOfBall)
                 {
 
                     //Debug.Log(gameObject.transform.parent.GetComponent<Ballbounce>().ColorOfBall);
 
-                    if (!gameObject.transform.parent.GetComponent<Ballbounce>().DoesPreExist && bb.AdjSameColor >= 2)
+                    if (!ParentofGameObject.DoesPreExist && bb.AdjSameColor >= 2)
                     {
-                        gameObject.transform.parent.GetComponent<Ballbounce>().DestroyonCollision();
+                        ParentofGameObject.DestroyonCollision();
+                        GameManager.Instance.DestroyOccurance = true;
+                        Debug.Log(GameManager.Instance.DestroyOccurance);
                     }
                     else
                     {
-                        gameObject.transform.parent.GetComponent<Ballbounce>().AdjSameColor++;
+                        ParentofGameObject.AdjSameColor++;
                     }
 
 
                 }
 
-                gameObject.transform.parent.GetComponent<Ballbounce>().stickComplete = true;
+                ParentofGameObject.stickComplete = true;
 
                
                 //gameObject.transform.parent.GetComponent<Ballbounce>().RegisterOperationdone = true;
@@ -64,12 +70,14 @@ public class BallTrigger : MonoBehaviour
                 Included = false;
             }
 
-            gameObject.transform.parent.GetComponent<Ballbounce>().DoesPreExist = true;
+            ParentofGameObject.DoesPreExist = true;
 
-            if (gameObject.transform.parent.GetComponent<Ballbounce>().DoesPreExist && collision.transform.parent.gameObject.GetComponent<Ballbounce>().AdjSameColor > 2)
+            if (ParentofGameObject.DoesPreExist && CollidedObjectwithParent.AdjSameColor > 2)
             {
                 Debug.Log("triggered");
-                gameObject.transform.parent.GetComponent<Ballbounce>().DestroyonCollision();
+                ParentofGameObject.DestroyonCollision();
+                GameManager.Instance.DestroyOccurance = true;
+                Debug.Log(GameManager.Instance.DestroyOccurance);
             }
 
 

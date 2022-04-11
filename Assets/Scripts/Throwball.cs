@@ -6,11 +6,15 @@ public class Throwball : MonoBehaviour
 
     public GameObject ball;
 
+    public Transform AfterLaunchParent;
+    
     Transform child;
 
     Transform grandChild;
 
     GameObject newGrandChild;
+
+   
 
     private void Start()
     {
@@ -39,7 +43,7 @@ public class Throwball : MonoBehaviour
 
                 //gameObject.transform.GetChild(0).GetComponent<Rigidbody2D>().gravityScale = -.2f;
 
-                grandChild.parent = null;
+                grandChild.transform.parent = AfterLaunchParent;
 
                
 

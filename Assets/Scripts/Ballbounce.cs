@@ -26,6 +26,8 @@ public class Ballbounce : MonoBehaviour
 
     public bool RegisterOperationdone;
 
+    public bool hasVisited;
+
    
 
      
@@ -144,13 +146,15 @@ public class Ballbounce : MonoBehaviour
 
             //Debug.Log("Collided");
         }
-
+        //collision with the celling
         if (collision.gameObject.CompareTag("StickWall"))
         {
             //collision.gameObject.GetComponent<Ballbounce>().enabled = false;
             gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
             GameManager.Instance.isstuck = true;
+
+            GameManager.Instance.Roots.Add(gameObject);
 
             stickComplete = true;
 
