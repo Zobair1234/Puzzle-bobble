@@ -9,7 +9,7 @@ public class Ballbounce : MonoBehaviour
 
     public bool IsDestroing;
 
-    public bool DoesPreExist;
+    public bool DoesPreExist = false;
 
     public List<GameObject> collidedObjects = new List<GameObject>();
 
@@ -25,7 +25,18 @@ public class Ballbounce : MonoBehaviour
 
     public bool RegisterOperationdone;
 
-    public bool hasVisited;
+    public bool hasVisited =false;
+
+    public bool IsRoot;
+
+    public bool RegisterForDestruction;
+
+    public float posX;
+
+    public float posY;
+
+
+
 
 
 
@@ -33,9 +44,12 @@ public class Ballbounce : MonoBehaviour
     private void Start()
     {
 
+        posX = transform.position.x;
+        posY = transform.position.y;
+
         IsDestroing = false;
 
-        DoesPreExist = true;
+      //  DoesPreExist = false;
         AdjSameColor = 1;
 
         rb = GetComponent<Rigidbody2D>();
@@ -50,7 +64,20 @@ public class Ballbounce : MonoBehaviour
     void Update()
     {
 
+        if (DoesPreExist)
+        { 
+            //transform.position = new Vector3(posX, posY, 0); 
+        }
         lastVelocity = rb.velocity;
+
+        //gameObject.transform.position.y>3f 
+
+        if (gameObject.transform.position.y < 0f && DoesPreExist)
+        {
+            Debug.Log("game over");
+
+           // Debug.Log(gameObject.transform.position.y);
+        }
 
 
 
@@ -59,7 +86,7 @@ public class Ballbounce : MonoBehaviour
     public void DestroyonCollision()
     {
         // Debug.Log(gameObject.name);
-        Debug.Log("working");
+       // Debug.Log("working");
 
 
         IsDestroing = true;
@@ -73,18 +100,28 @@ public class Ballbounce : MonoBehaviour
 
                 var bb = co.GetComponent<Ballbounce>();
 
-                if (co != null && !bb.IsDestroing && bb.ColorOfBall == this.ColorOfBall)
+                if (!bb.IsDestroing && bb.ColorOfBall == this.ColorOfBall)
                 {
                     co.GetComponent<Ballbounce>().DestroyonCollision();
 
-
+                    
 
                 }
             }
         }
+
+        if(IsRoot)
+        {
+            GameManager.Instance.RootHasBeenDestroied = true;
+        }
+
+        RegisterForDestruction = true;
+
         GameManager.Instance.IsDestroied = true;
 
-        Destroy(gameObject);
+        //Debug.Log("Name                    " + gameObject.name);
+
+        GameManager.Instance.ToDestroy.Add(gameObject);
     }
 
 
@@ -113,10 +150,12 @@ public class Ballbounce : MonoBehaviour
         if (collision.gameObject.CompareTag("StickWall"))
         {
 
-            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            gameObject.GetComponent<Rigidbody2D>().mass = 100f;
+            //gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            //gameObject.GetComponent<Rigidbody2D>().mass = 100f;
             //collision.gameObject.GetComponent<Ballbounce>().enabled = false;
-            //gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+
 
             GameManager.Instance.isstuck = true;
 
@@ -125,6 +164,8 @@ public class Ballbounce : MonoBehaviour
             stickComplete = true;
 
             DoesPreExist = true;
+
+            IsRoot = true;
             //Debug.Log("Collided");
         }
 

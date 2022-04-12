@@ -9,6 +9,7 @@ TagManager:
   - InvalidParent
   - ValidParent
   - BounceWall
+  - GameOverWall
   layers:
   - Default
   - TransparentFX

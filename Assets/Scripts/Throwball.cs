@@ -65,33 +65,18 @@ public class Throwball : MonoBehaviour
         if (GameManager.Instance.IsDestroied )
         {
 
-            
 
+            SpawnNewBall();
           
 
-            newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(Random.Range(0,6)), child.transform.position, ball.transform.rotation);
-
-            newGrandChild.transform.parent = child;
-
-            GameManager.Instance.isstuck = false;
-            GameManager.Instance.IsDestroied = false;
-
-            grandChild = gameObject.transform.GetChild(0).GetChild(0);
 
 
         }
 
-        else if(grandChild.GetComponent<Ballbounce>().stickComplete)
+        else if(grandChild!=null && grandChild.GetComponent<Ballbounce>().stickComplete)
         {
-            newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(Random.Range(0, 6)), child.transform.position, ball.transform.rotation);
 
-            newGrandChild.transform.parent = child;
-
-            GameManager.Instance.isstuck = false;
-            GameManager.Instance.IsDestroied = false;
-
-            grandChild = gameObject.transform.GetChild(0).GetChild(0);
-
+            SpawnNewBall();
         }
 
         
@@ -101,9 +86,26 @@ public class Throwball : MonoBehaviour
     {
         
         yield return new WaitForSeconds(.8f);
-        Debug.Log("ASD");
+        //Debug.Log("ASD");
         canClick = true;
 
+    }
+
+    void SpawnNewBall()
+    {
+
+        newGrandChild = Instantiate(GameManager.Instance.DifferentColorofBalls.ElementAt(Random.Range(0, 6)), child.transform.position, ball.transform.rotation);
+
+        newGrandChild.transform.parent = child;
+
+        newGrandChild.name = GameManager.Instance.CounterThrow.ToString();
+
+        GameManager.Instance.CounterThrow++;
+
+        GameManager.Instance.isstuck = false;
+        GameManager.Instance.IsDestroied = false;
+
+        grandChild = gameObject.transform.GetChild(0).GetChild(0);
     }
 
 }

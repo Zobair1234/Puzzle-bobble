@@ -16,7 +16,22 @@ public class GameManager : MonoBehaviour
 
     public GameObject BallHolder;
 
+    //public GameObject GameOverWall;
+
     public List<GameObject> DifferentColorofBalls = new List<GameObject>();
+
+
+    public List<GameObject> ToDestroy = new List<GameObject>();
+
+
+
+    public bool ChainReaction;
+
+    public int CounterThrow;
+
+    public bool RootHasBeenDestroied;
+
+    public bool NaturalDestroyComplete;
 
 
     private void Awake()
@@ -40,72 +55,95 @@ public class GameManager : MonoBehaviour
         if (DestroyOccurance)
         {
             DestroyOccurance = false;
+            //   Debug.Log("ASD");
+            DestroyDisconnectedBalls();
+        }
 
-           
+    }
 
-            foreach (var co in Roots.ToList())
+    public void StartNaturalDestroy()
+    {
+        if(ToDestroy.Count>0)
+        {
+            foreach(var co in ToDestroy.ToList())
             {
                 if (co != null)
                 {
-
-                    Debug.Log("ASD");
-                    //var bb = co.GetComponent<Ballbounce>().collidedObjects;
-
-                    TraverseBalls(co);
-
-
+                    if (co.GetComponent<Ballbounce>().IsRoot)
+                    {
+                        foreach (var Rco in Roots.ToList())
+                        {
+                            if(Rco == co)
+                            {
+                                Roots.Remove(Rco);
+                            }
+                        }
+                    }
+                    Destroy(co);
                 }
             }
-
-           // DestroyBalls();
-
-            DestroyDisconnectedBalls();
-
-            
         }
+
+        ToDestroy.Clear();
+
+        ToDestroy = new List<GameObject>();
+
+
+        //IsDestroied = true;
+        NaturalDestroyComplete = true;
     }
 
-    void TraverseBalls(GameObject newRoot)
+
+
+
+    public void TraverseBalls(GameObject newRoot)
     {
+
+       // Debug.Log(newRoot.name + "is being Traversed");
         var bb = newRoot.GetComponent<Ballbounce>();
 
         bb.hasVisited = true;
 
-        foreach (var co in bb.collidedObjects.ToList())
+        foreach (var co in bb.collidedObjects)
         {
-            if (co != null && !co.GetComponent<Ballbounce>().hasVisited)
+            if (co != null && !co.GetComponent<Ballbounce>().hasVisited && !co.GetComponent<Ballbounce>().RegisterForDestruction)
             {
-
+              //  Debug.Log(co.name + " being Traversed");
                 TraverseBalls(co);
 
 
             }
-           
+
 
         }
 
     }
 
-    void DestroyDisconnectedBalls()
+    public void DestroyDisconnectedBalls()
     {
+        //Debug.Log("Child Count ");
+
         Transform Bhtr = BallHolder.transform;
 
-
+        
         if (BallHolder != null && Bhtr.childCount > 0)
         {
             for (int i = 0; i < Bhtr.childCount; i++)
             {
                 var ChildScript = Bhtr.GetChild(i).GetComponent<Ballbounce>();
 
+               
+
+
                 if (!ChildScript.hasVisited)
                 {
-
+                    Debug.Log("Destroy " + Bhtr.GetChild(i).gameObject.name);
                     Destroy(Bhtr.GetChild(i).gameObject);
                 }
 
                 else
                 {
-
+                    Debug.Log("not Destroy " + Bhtr.GetChild(i).gameObject.name);
                     ChildScript.hasVisited = false;
                 }
             }
@@ -113,7 +151,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-   public  void DestroyBalls()
+    public void CheckBalls()
     {
         Transform Bhtr = BallHolder.transform;
 
@@ -124,14 +162,13 @@ public class GameManager : MonoBehaviour
             {
                 var ChildScript = Bhtr.GetChild(i).GetComponent<Ballbounce>();
 
-                if (ChildScript.AdjSameColor >2)
+                if (ChildScript.hasVisited)
                 {
+                    Debug.Log("Error " + Bhtr.GetChild(i).gameObject.name);
 
-                    ChildScript.DestroyonCollision();
-                    Debug.Log("working");
                 }
 
-                
+
             }
         }
     }
