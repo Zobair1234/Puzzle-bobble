@@ -40,20 +40,13 @@ public class BallTrigger : MonoBehaviour
 
 
             //gameObject.transform.parent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            gameObject.transform.parent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-
-            collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = 0;
-
+       
 
             //gameObject.transform.parent.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 
 
 
-            if (Count == 0)
-            { 
-                StartCoroutine(ChangeBodyType());
-            }
+         
 
             //gameObject.transform.parent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
 
@@ -181,10 +174,28 @@ public class BallTrigger : MonoBehaviour
 
             //GameManager.Instance.DestroyBalls();
 
-            GameManager.Instance.isstuck = true;
+
+            gameObject.transform.parent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+
+            gameObject.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            gameObject.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = 0;
+
+            collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = 0;
+
+               GameManager.Instance.isstuck = true;
+
+             /*  gameObject.transform.parent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+
+               collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+               collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = 0;*/
 
 
-            
+              /* if (Count == 0)
+               {
+                   StartCoroutine(ChangeBodyType());
+               } 
+*/
             //Debug.Log(gameObject.transform.parent.GetComponent<Ballbounce>().AdjSameColor);
         }
 
@@ -197,10 +208,15 @@ public class BallTrigger : MonoBehaviour
 
             //  gameObject.transform.GetComponent<Ballbounce>().posX = gameObject.transform.parent.transform.position.x;
             // gameObject.transform.GetComponent<Ballbounce>().posY = gameObject.transform.parent.transform.position.y;
+            if(collision!=null)
+            {
+                gameObject.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                gameObject.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = 0;
 
-            collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = 0;
+                collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                collision.gameObject.transform.parent.GetComponent<Rigidbody2D>().angularVelocity = 0;
 
+            }
 
             gameObject.transform.parent.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
