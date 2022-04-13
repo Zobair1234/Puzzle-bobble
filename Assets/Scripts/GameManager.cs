@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,6 +25,9 @@ public class GameManager : MonoBehaviour
     public List<GameObject> ToDestroy = new List<GameObject>();
 
 
+    public List<int> ballAmount = new List<int>();
+
+
 
     public bool ChainReaction;
 
@@ -32,6 +36,8 @@ public class GameManager : MonoBehaviour
     public bool RootHasBeenDestroied;
 
     public bool NaturalDestroyComplete;
+
+    public GameObject gameoverScreen;
 
 
     private void Awake()
@@ -47,6 +53,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         //DontDestroyOnLoad(gameObject);
 
+     
 
     }
 
@@ -91,6 +98,8 @@ public class GameManager : MonoBehaviour
 
         //IsDestroied = true;
         NaturalDestroyComplete = true;
+
+         CheckBalls();
     }
 
 
@@ -155,22 +164,56 @@ public class GameManager : MonoBehaviour
     {
         Transform Bhtr = BallHolder.transform;
 
+        for (int i = 0; i < ballAmount.Count; i++)
+        {
+            ballAmount[i] = 0;
+        }
 
-        if (BallHolder != null && Bhtr.childCount > 0)
+        if (Bhtr.childCount == 0)
+        {
+            gameoverScreen.SetActive(true);
+        }
+
+        else if (BallHolder != null && Bhtr.childCount > 0)
         {
             for (int i = 0; i < Bhtr.childCount; i++)
             {
                 var ChildScript = Bhtr.GetChild(i).GetComponent<Ballbounce>();
 
-                if (ChildScript.hasVisited)
+
+                if(ChildScript.ColorOfBall == BallColor.Red)
                 {
-                    Debug.Log("Error " + Bhtr.GetChild(i).gameObject.name);
-
+                    ballAmount[0] += 1;
                 }
-
+                else if(ChildScript.ColorOfBall == BallColor.White)
+                {
+                    ballAmount[1] += 1;
+                }
+                else if (ChildScript.ColorOfBall == BallColor.Yellow)
+                {
+                    ballAmount[2] += 1;
+                }
+                else if (ChildScript.ColorOfBall == BallColor.Brown)
+                {
+                    ballAmount[3] += 1;
+                }
+                else if (ChildScript.ColorOfBall == BallColor.Blue)
+                {
+                    ballAmount[4] += 1;
+                }
+                else if (ChildScript.ColorOfBall == BallColor.Green)
+                {
+                    ballAmount[5] += 1;
+                }
 
             }
         }
+    }
+
+    public void Restart()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
 
 

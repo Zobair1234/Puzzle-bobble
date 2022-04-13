@@ -35,7 +35,7 @@ public class Ballbounce : MonoBehaviour
 
     public float posY;
 
-
+    
 
 
 
@@ -72,11 +72,14 @@ public class Ballbounce : MonoBehaviour
 
         //gameObject.transform.position.y>3f 
 
-        if (gameObject.transform.position.y < 0f && DoesPreExist)
+        if (gameObject.transform.position.y < 0.5f && DoesPreExist)
         {
             Debug.Log("game over");
 
-           // Debug.Log(gameObject.transform.position.y);
+            GameManager.Instance.gameoverScreen.SetActive(true);
+
+
+            // Debug.Log(gameObject.transform.position.y);
         }
 
 
